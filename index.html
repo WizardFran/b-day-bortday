@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss:#08233a; --deep:#0f3d5e; --steel:#2f6f9f; --slate:#7d8c99; --mist:#dce6ec; --foam:#f4f8fa;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;height:100%;overflow:hidden;background:var(--abyss);color:var(--foam);
+  font-family:"Nunito",system-ui,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent;
+}
+/* background: animated fallback sea + optional video */
+.sea{position:fixed;inset:0;background:linear-gradient(180deg,var(--steel) 0%,var(--deep) 45%,var(--abyss) 100%)}
+.sea::before{
+  content:"";position:absolute;inset:-20% -10% 30% -10%;
+  background:repeating-linear-gradient(105deg,rgba(220,230,236,.14) 0 40px,transparent 40px 130px);
+  filter:blur(18px);animation:rays 14s ease-in-out infinite alternate;
+}
+@keyframes rays{from{transform:translateX(-4%)}to{transform:translateX(4%)}}
+#bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.shade{position:fixed;inset:0;background:linear-gradient(180deg,rgba(8,35,58,.35),rgba(8,35,58,.15) 40%,rgba(8,35,58,.6))}
+
+main{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;pointer-events:none}
+h1{
+  font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;
+  font-size:clamp(2.6rem,10vw,6.5rem);line-height:.98;margin:0;letter-spacing:.01em;
+  color:var(--foam);text-shadow:0 4px 0 var(--deep),0 10px 30px rgba(8,35,58,.55);
+}
+h1 span{display:block;color:var(--mist);font-size:.62em;margin-top:.12em}
+.hint{
+  margin-top:28px;padding:10px 20px;border-radius:999px;font-weight:800;font-size:1.05rem;
+  background:rgba(125,140,153,.35);border:1.5px solid rgba(220,230,236,.5);backdrop-filter:blur(6px);
+  animation:bob 2.6s ease-in-out infinite;
+}
+@keyframes bob{50%{transform:translateY(-6px)}}
+
+/* bubbles */
+.bubble{
+  position:fixed;z-index:3;border-radius:50%;pointer-events:auto;cursor:pointer;
+  background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.9) 0 8%,rgba(220,230,236,.35) 30%,rgba(47,111,159,.22) 70%);
+  border:1.5px solid rgba(244,248,250,.65);
+  animation:rise var(--t) linear forwards;
+}
+@keyframes rise{
+  0%{transform:translate(0,0) scale(.3);opacity:0}
+  12%{opacity:1}
+  50%{transform:translate(var(--dx),-45vh) scale(1)}
+  100%{transform:translate(calc(var(--dx)*-.6),-95vh) scale(1.08);opacity:0}
+}
+.ring{position:fixed;z-index:3;pointer-events:none;border-radius:50%;border:3px solid rgba(244,248,250,.9);transform:translate(-50%,-50%);animation:ring .45s ease-out forwards}
+@keyframes ring{to{transform:translate(-50%,-50%) scale(1.8);opacity:0;border-width:1px}}
+/* pop-up creatures */
+.critter{
+  position:fixed;z-index:4;pointer-events:none;width:var(--w);
+  transform:translate(-50%,-50%);animation:pop 3.6s cubic-bezier(.2,1.4,.4,1) forwards;
+  filter:drop-shadow(0 8px 14px rgba(8,35,58,.5));
+}
+.critter svg{display:block;width:100%;height:auto}
+.critter img{display:block;width:100%;height:auto;border-radius:14px;border:6px solid var(--foam);background:var(--foam)}
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(0) rotate(var(--r))}
+  14%{transform:translate(-50%,-50%) scale(1) rotate(var(--r))}
+  80%{transform:translate(-50%,-62%) scale(1) rotate(var(--r));opacity:1}
+  100%{transform:translate(-50%,-72%) scale(.9) rotate(var(--r));opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .sea::before,.hint{animation:none}
+  .bubble{animation-duration:14s!important}
+}
+
+#surpriseBtn{
+  position:fixed;z-index:5;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  padding:9px 18px;border-radius:999px;border:2px solid var(--mist);
+  background:var(--steel);color:var(--foam);font:800 .9rem "Nunito",system-ui,sans-serif;
+  box-shadow:0 8px 24px rgba(8,35,58,.5);cursor:pointer;
+}
+#surpriseBtn:active{transform:translateX(-50%) scale(.96)}
+#introOverlay{display:none;position:fixed;left:0;top:0;width:100%;height:100%;z-index:10;background:#000}
+#introOverlay.on{display:block}
+#introVid{width:100%;height:100%;object-fit:contain;background:#000}
+#skipBtn{
+  position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top,0px));
+  padding:8px 16px;border-radius:999px;border:1.5px solid rgba(255,255,255,.6);
+  background:rgba(0,0,0,.4);color:#fff;font:800 .95rem "Nunito",system-ui,sans-serif;
+}
+
+@media (max-width:600px){
+  #surpriseBtn{padding:9px 18px;font-size:.9rem;border-width:1.5px}
+}
+
+</style>
+</head>
+<body>
+<div class="sea"></div>
+<video id="bg" autoplay muted loop playsinline preload="auto"></video>
+<div class="shade"></div>
+
+<main>
+  <h1 id="title">Happy Birthday<span id="name"></span></h1>
+  <div class="hint">PINDOT MO BUBBLES BOI</div>
+</main>
+
+
+<button id="surpriseBtn" type="button">CLICK MO TO AFTER DE BUBBLES</button>
+<div id="introOverlay">
+  <video id="introVid" src="candiess.mp4" playsinline webkit-playsinline preload="auto"></video>
+</div>
+
+
+<script>
+/* ===== EDIT THESE ===== */
+const FRIEND_NAME = "DHAANEEEEE";   // her name
+const VIDEO_SRC   = "shark.mp4";              // link to your shark video (mp4). Leave empty to use the animated sea.
+/* ====================== */
+
+document.getElementById("name").textContent = FRIEND_NAME + "!";
+
+const vid = document.getElementById("bg");
+if (VIDEO_SRC) {
+  vid.src = VIDEO_SRC;
+  vid.addEventListener("loadeddata", () => { vid.style.display = "block"; });
+  vid.addEventListener("error", () => { vid.style.display = "none"; });
+}
+
+/* Your shark pictures go here (embedded in the page). While empty, drawn sharks are used. */
+const IMAGES = ["pictures/shark1.jpg", "pictures/shark2.jpg", "pictures/shark3.jpg", "pictures/shark4.jfif", "pictures/shark5.jpg", "pictures/shark6.jpg"];
+
+/* Illustrations (inline SVG so they work anywhere) */
+const shark = (a, b) => `<svg viewBox="0 0 200 100"><path d="M8 55Q70 12 150 40L192 12 182 50 197 88 150 63Q80 92 8 55Z" fill="${a}"/><path d="M12 58Q80 86 150 64L182 50Q100 78 12 58Z" fill="${b}"/><path d="M86 30L108 3 118 37Z" fill="${a}"/><path d="M100 66L112 90 126 64Z" fill="${a}"/><circle cx="42" cy="46" r="5" fill="#08233a"/><circle cx="43.5" cy="44.5" r="1.7" fill="#fff"/><path d="M62 42q4 8 0 16M70 41q4 8 0 17" stroke="#08233a" stroke-opacity=".35" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M14 58Q30 66 46 60" stroke="#08233a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+const hammer = (a, b) => `<svg viewBox="0 0 200 100"><path d="M26 52Q80 20 152 42L192 14 182 50 197 88 152 64Q80 88 26 52Z" fill="${a}"/><path d="M30 55Q90 82 152 65L182 50Q100 74 30 55Z" fill="${b}"/><rect x="6" y="24" width="30" height="56" rx="14" fill="${a}"/><path d="M88 32L110 4 120 38Z" fill="${a}"/><circle cx="14" cy="34" r="4.5" fill="#08233a"/><circle cx="14" cy="70" r="4.5" fill="#08233a"/><path d="M38 56Q50 62 62 57" stroke="#08233a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+const dino = (a, b) => `<svg viewBox="0 0 200 120"><path d="M148 72Q180 72 196 46Q192 82 150 92Z" fill="${a}"/><ellipse cx="102" cy="72" rx="56" ry="30" fill="${a}"/><ellipse cx="102" cy="84" rx="44" ry="16" fill="${b}"/><path d="M60 62Q50 70 46 76" stroke="${a}" stroke-width="22" stroke-linecap="round" fill="none"/><ellipse cx="38" cy="78" rx="20" ry="13" fill="${a}"/><rect x="74" y="90" width="15" height="24" rx="7" fill="${a}"/><rect x="122" y="90" width="15" height="24" rx="7" fill="${a}"/><path d="M68 46L79 16 91 44ZM92 42L106 8 118 42ZM118 44L131 14 142 48Z" fill="${b}"/><circle cx="32" cy="74" r="4" fill="#08233a"/><path d="M26 84Q36 88 46 83" stroke="#08233a" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+
+const pool = [
+  shark("#6f8394", "#dce6ec"),
+  shark("#2f6f9f", "#dce6ec"),
+  hammer("#7d8c99", "#f4f8fa"),
+  hammer("#3b7fb0", "#dce6ec"),
+  shark("#4d6275", "#c4d2db"),
+  dino("#5d7a8f", "#c9d6de"),
+  dino("#2f6f9f", "#dce6ec")
+];
+let last = -1;
+
+function spawnBubble(initial) {
+  if (document.querySelectorAll(".bubble").length > 22) return;
+  const b = document.createElement("div");
+  const s = 44 + Math.random() * 56;
+  const t = 8 + Math.random() * 6;
+  b.className = "bubble";
+  b.style.cssText = `width:${s}px;height:${s}px;left:${Math.random() * (innerWidth - s)}px;top:${innerHeight - 10}px;--dx:${(Math.random() - .5) * 140}px;--t:${t}s`;
+  if (initial === true) b.style.animationDelay = "-" + (Math.random() * t * .6) + "s";
+  b.addEventListener("pointerdown", pop);
+  b.addEventListener("animationend", () => b.remove());
+  document.body.appendChild(b);
+}
+
+let audioCtx;
+function playPop() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const t = audioCtx.currentTime, o = audioCtx.createOscillator(), g = audioCtx.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(500 + Math.random() * 300, t);
+    o.frequency.exponentialRampToValueAtTime(150, t + .12);
+    g.gain.setValueAtTime(.35, t);
+    g.gain.exponentialRampToValueAtTime(.001, t + .15);
+    o.connect(g).connect(audioCtx.destination);
+    o.start(t); o.stop(t + .16);
+  } catch (e) {}
+}
+
+function pop(e) {
+  e.stopPropagation();
+  new Audio("pop.mp3").play();
+  const b = e.currentTarget, r = b.getBoundingClientRect();
+  const x = r.left + r.width / 2, y = r.top + r.height / 2;
+  b.remove();
+  const ring = document.createElement("div");
+  ring.className = "ring";
+  ring.style.cssText = `left:${x}px;top:${y}px;width:${r.width}px;height:${r.width}px`;
+  document.body.appendChild(ring);
+  ring.addEventListener("animationend", () => ring.remove());
+  critter(x, y);
+}
+
+let bag = [];
+function nextIndex(n) {
+  if (!bag.length) {
+    bag = [...Array(n).keys()].sort(() => Math.random() - .5);
+    if (n > 1 && bag[bag.length - 1] === last) bag.unshift(bag.pop());
+  }
+  last = bag.pop();
+  return last;
+}
+
+function critter(x, y) {
+  const src = IMAGES.length ? IMAGES : pool;
+  const i = nextIndex(src.length);
+  const w = Math.min(230, Math.max(130, innerWidth * .32));
+  const el = document.createElement("div");
+  el.className = "critter";
+  el.style.cssText = `--w:${w}px;--r:${(Math.random() - .5) * 18}deg;left:${Math.min(innerWidth - w / 2, Math.max(w / 2, x))}px;top:${Math.min(innerHeight - 80, Math.max(80, y))}px`;
+  el.innerHTML = IMAGES.length ? `<img src="${IMAGES[i]}" alt="">` : pool[i];
+  document.body.appendChild(el);
+  el.addEventListener("animationend", () => el.remove());
+  const all = document.querySelectorAll(".critter");
+  if (all.length > 8) all[0].remove();
+}
+
+for (let i = 0; i < 7; i++) spawnBubble(true);
+setInterval(spawnBubble, 900);
+
+const NEXT_PAGE = "surprise.html";
+const overlay = document.getElementById("introOverlay");
+const introVid = document.getElementById("introVid");
+const goNext = () => { location.href = NEXT_PAGE; };
+
+document.getElementById("surpriseBtn").addEventListener("click", () => {
+  overlay.classList.add("on");
+  try { document.getElementById("bg").pause(); } catch (e) {}
+  introVid.currentTime = 0;
+  const p = introVid.play();
+  if (p && p.catch) p.catch(() => { introVid.controls = true; });
+});
+introVid.addEventListener("ended", goNext);
+introVid.addEventListener("error", goNext);
+document.getElementById("skipBtn").addEventListener("click", goNext);
+
+</script>
+</body>
+</html>

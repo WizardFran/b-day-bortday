@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f3d5e">
+<title>Happy Birthday!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&family=Great+Vibes&family=Lora:ital,wght@0,500;1,500&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss:#08233a; --deep:#0f3d5e; --steel:#2f6f9f; --slate:#7d8c99; --stone:#aab8c3; --mist:#dce6ec; --foam:#f4f8fa;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;min-height:100vh;color:var(--foam);background:var(--deep);
+  font-family:"Nunito",system-ui,-apple-system,sans-serif;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+}
+body.lock{overflow:hidden}
+button{font-family:inherit}
+
+/* prehistoric ground */
+.land{
+  position:fixed;left:0;top:0;right:0;bottom:0;z-index:-1;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170' viewBox='0 0 170 170'%3E%3Cg fill='%23dce6ec' fill-opacity='.09'%3E%3Cg transform='translate(24 20) rotate(-18 20 25)'%3E%3Cellipse cx='20' cy='14' rx='5' ry='11'/%3E%3Cellipse cx='8' cy='22' rx='4.5' ry='9' transform='rotate(-25 8 22)'/%3E%3Cellipse cx='32' cy='22' rx='4.5' ry='9' transform='rotate(25 32 22)'/%3E%3Cellipse cx='20' cy='38' rx='9' ry='10'/%3E%3C/g%3E%3Cg transform='translate(108 96) rotate(14 20 25)'%3E%3Cellipse cx='20' cy='14' rx='5' ry='11'/%3E%3Cellipse cx='8' cy='22' rx='4.5' ry='9' transform='rotate(-25 8 22)'/%3E%3Cellipse cx='32' cy='22' rx='4.5' ry='9' transform='rotate(25 32 22)'/%3E%3Cellipse cx='20' cy='38' rx='9' ry='10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(180deg,#5f7f99 0%,#3f6783 35%,#26485f 70%,#13303f 100%);
+}
+
+.view{display:none}
+.view.on{display:block}
+h1,h2{font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;margin:0;overflow-wrap:anywhere;text-shadow:0 3px 0 var(--abyss),0 9px 22px rgba(8,35,58,.5)}
+.sub{margin:12px auto 0;max-width:34ch;color:var(--mist);font-weight:600;line-height:1.4;text-align:center}
+.spine{
+  height:30px;margin-top:18px;opacity:.9;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='30' viewBox='0 0 48 30'%3E%3Cpath d='M2 30 L14 4 L26 30Z M24 30 L34 12 L46 30Z' fill='%232f6f9f'/%3E%3C/svg%3E") repeat-x bottom left;
+}
+.slab{
+  background:linear-gradient(160deg,#c6d2da,#9fb0bc);color:var(--abyss);
+  border:3px solid #5d6e7c;border-radius:18px 6px 18px 6px;
+  box-shadow:0 8px 18px rgba(8,35,58,.5),inset 0 0 0 2px rgba(255,255,255,.25);
+}
+
+/* back pill */
+#backTop{
+  position:fixed;z-index:15;left:12px;top:calc(10px + env(safe-area-inset-top,0px));
+  padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:800;font-size:.95rem;
+  color:var(--foam);border:2px solid var(--mist);background:rgba(8,35,58,.7);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+#backTop[hidden]{display:none}
+.sec{padding:62px 16px 40px;max-width:980px;margin:0 auto}
+.sec>h2{font-size:clamp(1.8rem,8vw,3rem);text-align:center;line-height:1.05}
+
+/* ===== menu ===== */
+#menu{text-align:center;padding:26px 18px 40px;max-width:480px;margin:0 auto}
+.dino{width:min(250px,64vw);height:auto;display:block;margin:0 auto 6px;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+#menu h1{font-size:clamp(2rem,10vw,3.6rem);line-height:1}
+.tag{display:inline-block;margin-top:14px;padding:6px 18px;border-radius:999px;font-weight:800;background:var(--stone);color:var(--abyss);border:2.5px solid #5d6e7c}
+.picks{margin-top:8px;display:grid;gap:16px}
+.pick{
+  display:flex;align-items:center;gap:16px;text-align:left;text-decoration:none;padding:16px 18px;min-height:88px;
+}
+.pick:nth-child(1){transform:rotate(-1deg)}.pick:nth-child(2){transform:rotate(.8deg)}.pick:nth-child(3){transform:rotate(-.6deg)}
+.pick:active{filter:brightness(.93)}
+.pick svg{flex:none;width:52px;height:52px}
+.pick b{display:block;font-family:"Bowlby One","Arial Black",sans-serif;font-weight:400;font-size:1.25rem;line-height:1.1}
+.pick span{display:block;margin-top:4px;font-weight:700;font-size:.92rem;line-height:1.3;opacity:.85}
+.small{display:inline-block;margin-top:22px;color:var(--mist);font-weight:800;font-size:.9rem}
+
+/* ===== playlist (scrapbook style) ===== */
+#playlist{--pl-accent:#2f6f9f;--rose:#4f8fc4;--pl-ink:#0f3d5e}
+body[data-view="playlist"] .land{background:linear-gradient(90deg,#06182a 0%,#0f3d5e 38%,#2f6f9f 72%,#7fb4dc 100%)}
+body[data-view="playlist"] #backTop{
+  left:auto;right:12px;padding:9px 18px;border:0;border-bottom:4px solid #2c8f43;background:#4cc760;color:#0c2a14;
+  font-family:"Bowlby One","Arial Black",sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  box-shadow:0 5px 0 rgba(0,0,0,.25);-webkit-backdrop-filter:none;backdrop-filter:none;
+}
+#playlist.sec{padding-top:66px;max-width:460px}
+.scrap{position:relative}
+.scName{
+  font-family:"Great Vibes","Brush Script MT",cursive;font-size:clamp(2.3rem,11vw,3.2rem);line-height:1;color:var(--foam);
+  transform:rotate(-5deg);margin:0 0 -12px 14px;position:relative;z-index:3;text-shadow:0 3px 10px rgba(0,0,0,.45);overflow-wrap:anywhere;
+}
+.note{
+  position:relative;z-index:2;transform:rotate(-3.5deg);padding:22px 20px 24px;border-radius:12px 22px 14px 26px;
+  background:
+    linear-gradient(115deg,rgba(255,255,255,.75) 0 7%,transparent 7% 21%,rgba(0,0,0,.06) 21% 22.5%,transparent 22.5% 47%,rgba(255,255,255,.6) 47% 52%,transparent 52% 69%,rgba(0,0,0,.07) 69% 70.5%,transparent 70.5%),
+    linear-gradient(35deg,rgba(0,0,0,.05) 0 3%,transparent 3% 38%,rgba(255,255,255,.55) 38% 45%,transparent 45% 80%,rgba(0,0,0,.05) 80% 82%,transparent 82%),
+    #e4eaef;
+  box-shadow:0 10px 24px rgba(0,0,0,.45);
+}
+.note p{margin:0;font-family:"Lora",Georgia,serif;font-style:italic;font-weight:500;font-size:.98rem;line-height:1.6;color:var(--pl-ink);text-align:justify;white-space:pre-line}
+
+.photoRow{position:relative;z-index:3;display:flex;justify-content:center;align-items:flex-end;margin-top:6px;padding:0 0 26px}
+.frame{
+  position:relative;width:min(200px,54vw);transform:rotate(5deg);padding:9px;margin-left:36px;
+  background:linear-gradient(135deg,#f7e48a,#b88a1e 30%,#fbefb8 55%,#8b6411 80%,#e8c867);
+  box-shadow:0 8px 18px rgba(0,0,0,.5),inset 0 0 0 2px rgba(255,255,255,.35),inset 0 0 0 5px rgba(120,80,10,.35);
+}
+.frame img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--stone)}
+.camera{position:absolute;left:calc(50% - 168px);bottom:0;width:min(130px,34vw);transform:rotate(-4deg);filter:drop-shadow(0 6px 8px rgba(0,0,0,.5))}
+.rose{position:absolute;width:76px;height:76px;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.rose.r1{right:-30px;top:-28px;transform:rotate(18deg);z-index:2}
+.rose.r2{left:auto;top:auto;right:-26px;bottom:-30px;width:72px;height:72px;transform:rotate(14deg);z-index:4}
+
+.player{--d:min(270px,76vw);position:relative;z-index:1;margin:-34px auto 0;width:var(--d)}
+.disc{position:relative;width:var(--d);height:var(--d);border-radius:50%;box-shadow:0 12px 28px rgba(0,0,0,.55)}
+.spin{
+  position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;
+  background:
+    radial-gradient(circle,#08233a 0 4%,var(--pl-accent) 4.5% 17%,#101820 17.5% 19%,transparent 19.5%),
+    conic-gradient(from 20deg,transparent 0 18%,rgba(255,255,255,.2) 24%,transparent 32% 66%,rgba(255,255,255,.14) 73%,transparent 80%),
+    repeating-radial-gradient(circle,#0b0f14 0 2px,#1a222b 2px 4px);
+  animation:spinr 5s linear infinite;animation-play-state:paused;
+}
+.player.playing .spin{animation-play-state:running}
+@keyframes spinr{to{transform:rotate(360deg)}}
+.ctrls{position:absolute;left:50%;top:57%;transform:translateX(-50%);display:flex;align-items:center;gap:6px}
+.ctrls button{width:38px;height:38px;padding:0;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:.8}
+.ctrls button svg{width:22px;height:22px}
+.ctrls button.on{opacity:1;filter:drop-shadow(0 0 5px var(--pl-accent))}
+.ctrls #bPlay{width:54px;height:54px;border-radius:50%;opacity:1;background:var(--pl-accent);box-shadow:0 0 0 3px rgba(255,255,255,.85),0 4px 10px rgba(0,0,0,.5)}
+.ctrls #bPlay svg{width:26px;height:26px}
+#bPlay .i-pause{display:none}
+.player.playing #bPlay .i-pause{display:block}
+.player.playing #bPlay .i-play{display:none}
+.vlabel{position:absolute;left:50%;top:80%;transform:translateX(-50%);width:62%;text-align:center;font-family:"Lora",Georgia,serif;font-style:italic;font-weight:500;font-size:.85rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{width:var(--d);height:6px;margin:16px auto 0;border-radius:3px;background:rgba(255,255,255,.25);overflow:hidden}
+.prog span{display:block;height:100%;width:0;background:#fff}
+
+#plLink{display:block;width:max-content;margin:20px auto 0;padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:800;color:var(--foam);background:rgba(8,35,58,.55);border:2px solid var(--mist)}
+#plLink[hidden]{display:none}
+#songs{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px}
+.song{border-radius:14px;background:rgba(8,35,58,.55);border:1.5px solid rgba(220,230,236,.35);color:var(--foam)}
+.song.cur{background:rgba(47,111,159,.55);border-color:#fff}
+.sp{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border:0;background:none;color:inherit;text-align:left;cursor:pointer;min-height:58px}
+.ic{flex:none;width:32px;height:32px;border-radius:50%;background:var(--foam);color:var(--abyss);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem}
+.st b{display:block;font-size:1rem;line-height:1.2}
+.st i{display:block;font-style:normal;font-weight:700;font-size:.82rem;opacity:.75;margin-top:2px}
+#plEmpty{text-align:center;color:var(--mist);padding:20px;line-height:1.5}
+
+/* ===== pictures ===== */
+#grid{columns:2;column-gap:14px;margin-top:22px}
+@media (min-width:700px){#grid{columns:3;column-gap:20px}}
+figure.slab{position:relative;margin:0 0 16px;break-inside:avoid;cursor:pointer;padding:8px 8px 10px}
+figure.slab:nth-child(odd){transform:rotate(-1.2deg)}
+figure.slab:nth-child(even){transform:rotate(1deg)}
+figure.slab::after{
+  content:"";position:absolute;right:11px;top:11px;width:18px;height:22px;opacity:.55;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'%3E%3Cg fill='%23f4f8fa'%3E%3Cellipse cx='20' cy='14' rx='5' ry='11'/%3E%3Cellipse cx='8' cy='22' rx='4.5' ry='9' transform='rotate(-25 8 22)'/%3E%3Cellipse cx='32' cy='22' rx='4.5' ry='9' transform='rotate(25 32 22)'/%3E%3Cellipse cx='20' cy='38' rx='9' ry='10'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+}
+figure.slab img{display:block;width:100%;height:auto;border-radius:10px 3px 10px 3px;background:var(--mist)}
+figcaption{font-weight:800;font-size:.85rem;text-align:center;padding-top:8px;line-height:1.25}
+figcaption:empty{display:none}
+#empty{text-align:center;color:var(--mist);padding:30px 10px;line-height:1.5}
+
+#lb{position:fixed;left:0;top:0;width:100%;height:100%;z-index:40;background:rgba(4,17,29,.96);display:none;flex-direction:column;align-items:center;justify-content:center;touch-action:pan-y}
+#lb.on{display:flex}
+#lbImg{max-width:100%;max-height:78%;object-fit:contain;border-radius:8px;-webkit-user-drag:none;user-select:none;-webkit-user-select:none}
+#lbCap{margin-top:14px;padding:0 24px;text-align:center;font-weight:800;min-height:1.3em}
+#lbCount{position:absolute;left:18px;top:calc(18px + env(safe-area-inset-top,0px));font-weight:800;color:var(--mist)}
+.lbBtn{position:absolute;border:1.5px solid rgba(255,255,255,.55);background:rgba(8,35,58,.7);color:#fff;width:44px;height:44px;border-radius:50%;font:800 1.3rem system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:0}
+#lbClose{right:16px;top:calc(14px + env(safe-area-inset-top,0px))}
+#lbPrev{left:10px;top:50%;margin-top:-22px}
+#lbNext{right:10px;top:50%;margin-top:-22px}
+
+/* ===== message: surprise box ===== */
+#message{position:relative;overflow-x:clip}
+#giftStage,#reveal{position:relative;z-index:1}
+#reveal[hidden]{display:none}
+#giftStage{text-align:center;padding-top:10px}
+#giftStage h2{font-size:clamp(1.6rem,7vw,2.5rem);line-height:1.1}
+
+/* the box, built from plain CSS shapes */
+.gbox{
+  --bw:min(230px,60vw);
+  position:relative;display:block;width:var(--bw);height:calc(var(--bw)*.92);
+  margin:calc(var(--bw)*.3) auto 0;padding:0;border:0;background:none;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transform-origin:50% 100%;
+  animation:floaty 3s ease-in-out infinite alternate;
+}
+.gbox span{display:block;position:absolute}
+.gbox:focus-visible{outline:3px solid #fff;outline-offset:14px;border-radius:12px}
+@keyframes floaty{to{transform:translateY(-8px)}}
+.gbox.held{animation:none;cursor:default}
+.gbox.shake{animation:shake .55s ease-in-out}
+@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-7deg)}40%{transform:rotate(7deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(5deg)}}
+
+.gb-shadow{left:6%;right:6%;bottom:-14px;height:20px;border-radius:50%;background:rgba(4,17,29,.5);filter:blur(7px)}
+.gb-body{
+  left:6%;right:6%;bottom:0;height:68%;border-radius:4px 4px 14px 14px;overflow:hidden;
+  background:
+    radial-gradient(circle,rgba(220,230,236,.5) 0 5px,transparent 5.5px) 0 0/44px 44px,
+    radial-gradient(circle,rgba(220,230,236,.32) 0 3px,transparent 3.5px) 22px 22px/44px 44px,
+    linear-gradient(90deg,#667886,#8696a3 50%,#667886);
+  box-shadow:inset 0 -14px 22px rgba(8,35,58,.28),inset 0 2px 0 rgba(255,255,255,.2);
+}
+.gb-rib{left:50%;top:0;bottom:0;width:19%;transform:translateX(-50%);background:linear-gradient(90deg,#2a6190,#4f8fc4 50%,#2a6190)}
+.gb-inside{left:0;right:0;top:0;height:16%;opacity:0;transition:opacity .2s;background:linear-gradient(#030d17,#0d2f4b);box-shadow:inset 0 -6px 10px rgba(79,143,196,.4)}
+.gbox.open .gb-inside{opacity:1}
+.gb-beam{
+  left:14%;right:14%;bottom:62%;height:115%;z-index:1;pointer-events:none;opacity:0;transform-origin:50% 100%;
+  clip-path:polygon(8% 100%,92% 100%,100% 0,0 0);
+  background:linear-gradient(to top,rgba(244,248,250,.7),rgba(244,248,250,0));
+}
+.gbox.open .gb-beam{animation:beam 1.7s ease-out both}
+@keyframes beam{0%{opacity:0;transform:scaleY(.25)}22%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.1)}}
+
+.gb-lid{
+  left:0;right:0;bottom:62%;height:30%;z-index:3;border-radius:10px 10px 6px 6px;transform-origin:50% 100%;
+  background:linear-gradient(180deg,#d4dee5,#aab8c3 60%,#93a4b1);
+  box-shadow:0 8px 14px -4px rgba(8,35,58,.5),inset 0 2px 0 rgba(255,255,255,.55);
+}
+.gb-lid .gb-rib{border-radius:0}
+.bow{left:50%;top:0;width:0;height:0;overflow:visible}
+.bow i{position:absolute;display:block}
+.bow .loop{
+  bottom:-3px;width:calc(var(--bw)*.23);height:calc(var(--bw)*.17);
+  border:calc(var(--bw)*.035) solid #2a6190;background:rgba(79,143,196,.4);box-shadow:inset 0 2px 3px rgba(255,255,255,.3);
+}
+.bow .l{right:-2px;border-radius:60% 40% 25% 60%;transform-origin:100% 100%;transform:rotate(-16deg)}
+.bow .r{left:-2px;border-radius:40% 60% 60% 25%;transform-origin:0 100%;transform:rotate(16deg)}
+.bow .tail{top:calc(var(--bw)*.02);width:calc(var(--bw)*.07);height:calc(var(--bw)*.13);background:#2a6190;border-radius:0 0 3px 3px}
+.bow .tl{right:calc(var(--bw)*.03);transform:rotate(18deg);transform-origin:50% 0}
+.bow .tr{left:calc(var(--bw)*.03);transform:rotate(-18deg);transform-origin:50% 0}
+.bow .knot{left:calc(var(--bw)*-.05);top:calc(var(--bw)*-.065);width:calc(var(--bw)*.1);height:calc(var(--bw)*.09);border-radius:35%;background:linear-gradient(#3b7db3,#1f567d);box-shadow:0 2px 3px rgba(8,35,58,.4)}
+
+.gbox.open .gb-lid{animation:lidPop .95s cubic-bezier(.3,.7,.4,1) forwards}
+@keyframes lidPop{
+  0%{transform:none;opacity:1}
+  16%{transform:translateY(6%) scale(1.03,.92)}
+  55%{transform:translate(16%,-150%) rotate(16deg);opacity:1}
+  100%{transform:translate(44%,-270%) rotate(48deg);opacity:0}
+}
+.gbox.closing .gb-lid{animation:lidDrop .7s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes lidDrop{0%{transform:translateY(-240%) rotate(-30deg);opacity:0}45%{opacity:1}100%{transform:none;opacity:1}}
+.gbox.open.static .gb-lid{animation:none;opacity:0;visibility:hidden}
+.gbox.open.static .gb-beam{animation:none}
+
+/* extra open-up animations */
+.gb-rays,.gb-ring{pointer-events:none;opacity:0}
+.gb-rays{
+  left:50%;top:18%;width:calc(var(--bw)*2.6);height:calc(var(--bw)*2.6);margin:calc(var(--bw)*-1.3) 0 0 calc(var(--bw)*-1.3);border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(244,248,250,.45) 0 7deg,transparent 7deg 22deg);
+  -webkit-mask:radial-gradient(circle,#000 0,transparent 68%);mask:radial-gradient(circle,#000 0,transparent 68%);
+}
+.gbox.open .gb-rays{animation:raysIn 3.6s ease-out both,raysSpin 14s linear infinite}
+@keyframes raysIn{0%{opacity:0;scale:.2}18%{opacity:1;scale:1}100%{opacity:.5;scale:1.1}}
+@keyframes raysSpin{to{rotate:360deg}}
+.gb-ring{left:50%;top:30%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:4px solid rgba(244,248,250,.9);box-shadow:0 0 18px rgba(127,180,220,.9)}
+.gbox.open .gb-ring{animation:ring 1s ease-out both}
+.gbox.open .gb-ring.r2{animation-delay:.18s}
+@keyframes ring{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(9)}}
+.gbox.held.jump{animation:boxJump .85s cubic-bezier(.3,.7,.4,1)}
+@keyframes boxJump{
+  0%{transform:scale(1,1)}
+  18%{transform:scale(1.08,.88)}
+  45%{transform:translateY(-6%) scale(.94,1.1)}
+  68%{transform:scale(1.05,.95)}
+  100%{transform:none}
+}
+.gbox.open .bow{animation:bowWiggle .9s ease-out}
+@keyframes bowWiggle{30%{transform:rotate(-14deg) scale(1.15)}60%{transform:rotate(9deg)}100%{transform:none}}
+.gbox.open .gb-body{animation:glowPulse 2.4s ease-in-out 3}
+@keyframes glowPulse{50%{box-shadow:inset 0 -14px 22px rgba(8,35,58,.28),inset 0 2px 0 rgba(255,255,255,.2),0 0 34px 8px rgba(127,180,220,.65)}}
+#giftStage h2.pop{animation:hPop .9s cubic-bezier(.3,1.5,.5,1)}
+@keyframes hPop{0%{transform:scale(.4) rotate(-6deg);opacity:0}60%{transform:scale(1.14) rotate(2deg);opacity:1}100%{transform:none}}
+#fx .st{position:absolute;left:0;top:0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);will-change:transform,opacity}
+#fx .bl{position:absolute;left:0;top:0;width:40px;height:50px;border-radius:50% 50% 48% 48%/58% 58% 42% 42%;will-change:transform,opacity;
+  box-shadow:inset -6px -8px 12px rgba(8,35,58,.25),inset 6px 6px 10px rgba(255,255,255,.35)}
+#fx .bl::before{content:"";position:absolute;left:14px;top:9px;width:8px;height:12px;border-radius:50%;background:rgba(255,255,255,.55);transform:rotate(25deg)}
+#fx .bl::after{content:"";position:absolute;left:50%;top:100%;width:1.5px;height:46px;margin-left:-1px;background:rgba(220,230,236,.8)}
+#giftHint{margin-top:30px;font-weight:800;font-size:1.05rem;display:inline-block;padding:10px 20px;border-radius:999px;background:rgba(125,140,153,.35);border:1.5px solid rgba(220,230,236,.5);animation:bob 2.6s ease-in-out infinite;transition:opacity .3s}
+#giftHint[hidden]{display:none}
+@keyframes bob{50%{transform:translateY(-6px)}}
+
+/* confetti layer (particles are plain boxes, animated from JS) */
+#fx{position:fixed;left:0;top:0;width:100%;height:100%;z-index:50;pointer-events:none;overflow:hidden}
+#fx .cf{position:absolute;left:0;top:0;will-change:transform,opacity;backface-visibility:visible}
+#fx .k1{border-radius:50%}
+#fx .k0,#fx .k2{border-radius:2px}
+
+/* the photo prints */
+.memories{display:flex;flex-wrap:wrap;justify-content:center;gap:22px 0;max-width:940px;margin:26px auto 40px;padding:10px 4px 0}
+.pol{
+  position:relative;display:block;margin:0 -3px;width:clamp(104px,28.5vw,152px);padding:7px 7px 26px;
+  background:#fbfdfe;border-radius:3px;opacity:0;
+  box-shadow:0 1px 1px rgba(8,35,58,.3),0 12px 22px -6px rgba(8,35,58,.6);
+  transform:translateY(var(--dy,0px)) rotate(var(--r,0deg));will-change:transform;
+  cursor:default;break-inside:auto;
+}
+.pol[hidden]{display:none}
+.pol::before{
+  content:"";position:absolute;left:50%;top:-9px;width:46px;height:17px;margin-left:-23px;transform:rotate(-3deg);
+  background:linear-gradient(135deg,rgba(244,248,250,.8),rgba(170,184,195,.7));border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 1px 2px rgba(8,35,58,.25);
+}
+.pol:nth-child(even)::before{transform:rotate(4deg)}
+.pol img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--stone);border-radius:1px}
+.pol figcaption{position:absolute;left:6px;right:6px;bottom:4px;padding:0;font-family:"Caveat",cursive;font-weight:700;font-size:1rem;line-height:1.1;color:#16435f;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pol.in{opacity:1;transition:transform .28s cubic-bezier(.3,1.4,.5,1)}
+.pol.in:hover{transform:translateY(calc(var(--dy,0px) - 6px)) rotate(0deg) scale(1.04);z-index:5}
+
+/* the letter */
+#letter{max-width:540px;margin:6px auto 0}
+#letter:not(.on){visibility:hidden}
+.paper{
+  --ln:34px;--ml:36px;
+  position:relative;color:#143f5c;padding:22px 20px 26px calc(var(--ml) + 12px);
+  border:3px solid var(--stone);border-radius:6px 22px 6px 22px;opacity:0;transform-origin:50% 0;
+  background:
+    linear-gradient(90deg,transparent calc(var(--ml) - 2px),rgba(79,143,196,.5) calc(var(--ml) - 2px) var(--ml),transparent var(--ml)),
+    repeating-linear-gradient(180deg,transparent 0 calc(var(--ln) - 1px),rgba(47,111,159,.18) calc(var(--ln) - 1px) var(--ln)) 0 22px/100% var(--ln) repeat-y,
+    var(--foam);
+  box-shadow:0 12px 30px rgba(8,35,58,.55);
+}
+#letter.on .paper{opacity:1;animation:unfold .8s cubic-bezier(.2,.9,.3,1) both}
+@keyframes unfold{from{transform:scaleY(.08);opacity:0}to{transform:none;opacity:1}}
+.paper h3{margin:0;font-family:"Great Vibes","Brush Script MT",cursive;font-weight:400;font-size:2.4rem;line-height:calc(var(--ln)*2);color:var(--deep)}
+.paper p{margin:0 0 var(--ln);font-family:"Caveat","Lora",cursive;font-weight:500;font-size:25px;line-height:var(--ln);white-space:pre-line}
+.paper .sig{font-family:"Great Vibes","Brush Script MT",cursive;font-size:2rem;line-height:calc(var(--ln)*2);text-align:right;color:var(--steel)}
+.paper .w{display:inline-block;white-space:nowrap}
+.paper .ch{display:inline-block;opacity:0}
+.paper.typing .ch{animation:chIn .34s cubic-bezier(.2,.9,.3,1.35) both;animation-delay:calc(var(--i)*var(--step,14ms))}
+@keyframes chIn{from{opacity:0;transform:translateY(.5em) rotate(5deg) scale(.7)}to{opacity:1;transform:none}}
+.paper.static .ch{opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:430px){
+  .paper{--ln:30px;--ml:26px;padding-right:14px}
+  .paper p{font-size:22px}
+  .paper h3{font-size:2.1rem}
+  .paper .sig{font-size:1.7rem}
+}
+
+#replay{
+  display:block;margin:30px auto 0;padding:11px 24px;border-radius:999px;cursor:pointer;font-weight:800;font-size:1rem;
+  color:var(--foam);background:rgba(8,35,58,.6);border:2px solid var(--mist);
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .5s,transform .5s,background .2s;
+}
+#replay.show{opacity:1;pointer-events:auto;transform:none}
+#replay:hover{background:rgba(47,111,159,.7)}
+#replay:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* floating details, built from CSS shapes */
+.floaters{position:absolute;left:0;top:0;right:0;bottom:0;z-index:0;pointer-events:none}
+.fl{position:absolute;display:block;width:var(--s);height:var(--s);opacity:0;transition:opacity 1.4s ease;animation:flDrift var(--t,7s) ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+#message.opened .fl{opacity:var(--o,.8)}
+.fl.b{border-radius:50%;border:1.5px solid rgba(244,248,250,.7);background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.85) 0 8%,rgba(220,230,236,.28) 32%,rgba(47,111,159,.18) 72%)}
+.fl.d{rotate:45deg;background:linear-gradient(135deg,#f9fbfc,#aab8c3 55%,#e8eef2);border-radius:2px;box-shadow:0 0 8px rgba(220,230,236,.5)}
+.fl.s{background:linear-gradient(#f4f8fa,#f4f8fa) center/2px 100% no-repeat,linear-gradient(#f4f8fa,#f4f8fa) center/100% 2px no-repeat;filter:drop-shadow(0 0 4px rgba(220,230,236,.8))}
+@keyframes flDrift{from{transform:translate(0,0)}to{transform:translate(var(--x,8px),var(--y,-18px))}}
+
+@media (prefers-reduced-motion:reduce){
+  .dino,#gift,#giftHint,.gbox,.fl,.gb-rays,.gb-ring{animation:none}
+  .paper{animation:none}
+}
+
+#songs{display:none}
+</style>
+</head>
+<body>
+<div class="land"></div>
+<a id="backTop" href="#menu" hidden>&#8249; Back</a>
+
+<!-- ============ MENU ============ -->
+<section id="menu" class="view on">
+  <img class="dino" id="dinoPic" alt="">
+  <h1 id="menuTitle"></h1>
+  <div class="tag" id="who"></div>
+  <div class="spine"></div>
+  <div class="picks">
+    <a class="pick slab" href="#playlist">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M18 36V12l22-5v24" fill="none" stroke="#08233a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="12" cy="37" rx="7" ry="5.5" fill="#08233a"/><ellipse cx="34" cy="32" rx="7" ry="5.5" fill="#08233a"/></svg>
+      <div><b>SPOTIBAI</b><span>A song that really reminds me of you</span></div>
+    </a>
+    <a class="pick slab" href="#pictures">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="30" rx="5" fill="none" stroke="#08233a" stroke-width="4"/><circle cx="17" cy="21" r="4" fill="#08233a"/><path d="M8 36l11-10 8 7 6-6 8 9z" fill="#08233a"/></svg>
+      <div><b>HIGHLIGHTS</b></div>
+    </a>
+    <a class="pick slab" href="#message">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="21" width="34" height="21" rx="3" fill="#08233a"/><rect x="5" y="14" width="38" height="9" rx="3" fill="#08233a"/><rect x="21" y="14" width="6" height="28" fill="#aab8c3"/><path d="M24 14c-8-9-15-1-9 0zM24 14c8-9 15-1 9 0z" fill="none" stroke="#08233a" stroke-width="3"/></svg>
+      <div><b>UNSINT A MISIJ</b></div>
+    </a>
+  </div>
+  <a class="small" href="index.html">Back to the bubbles</a>
+</section>
+
+<!-- ============ PLAYLIST ============ -->
+<section id="playlist" class="view sec">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="rose" viewBox="0 0 100 100">
+        <path d="M50 60C20 70 8 90 4 98c22-4 40-16 46-38z" fill="#2c6e4f"/>
+        <path d="M52 60c28 6 42 24 46 36-24-4-42-16-46-36z" fill="#256044"/>
+        <circle cx="50" cy="40" r="30" style="fill:var(--rose)"/>
+        <path d="M46 40a4 4 0 1 1 8 0a8 8 0 1 1-16 0a13 13 0 1 1 26 0a19 19 0 1 1-38 0" fill="none" stroke="rgba(0,0,0,.35)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M24 30C34 12 62 10 76 28" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="3" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="scrap">
+    
+    <div class="note">
+      <p id="plNote"></p>
+      <svg class="rose r2" aria-hidden="true"><use href="#rose"/></svg>
+    </div>
+    <div class="photoRow">
+      <div class="frame" id="plFrame">
+        <img id="plPhoto" alt="">
+        <svg class="rose r1" aria-hidden="true"><use href="#rose"/></svg>
+      </div>
+      <svg class="camera" viewBox="0 0 140 92" aria-hidden="true">
+        <rect x="14" y="6" width="28" height="16" rx="3" fill="#8f9ca6"/>
+        <rect x="98" y="4" width="28" height="18" rx="3" fill="#8f9ca6"/>
+        <rect x="4" y="18" width="132" height="68" rx="9" fill="#cfd8de"/>
+        <rect x="4" y="36" width="132" height="42" fill="#20262b"/>
+        <circle cx="70" cy="54" r="31" fill="#7b8791"/>
+        <circle cx="70" cy="54" r="25" fill="#10161b"/>
+        <circle cx="70" cy="54" r="16" fill="#2a3b4b"/>
+        <circle cx="62" cy="46" r="5" fill="#fff" opacity=".35"/>
+        <circle cx="118" cy="30" r="4.5" fill="#aab8c3"/>
+        <rect x="14" y="26" width="18" height="7" rx="2" fill="#f4f8fa" opacity=".8"/>
+      </svg>
+    </div>
+    <div class="player" id="player">
+      <div class="disc">
+        <div class="spin"></div>
+        <div class="ctrls">
+          <button id="bShuffle" type="button" aria-label="Shuffle" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4M18 4l3 3-3 3M18 14l3 3-3 3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button id="bPrev" type="button" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M6 5v14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M19 5v14L9 12z" fill="#fff" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+          <button id="bPlay" type="button" aria-label="Play or pause">
+            <svg class="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="#fff"/></svg>
+          </button>
+          <button id="bNext" type="button" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M18 5v14" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M5 5v14l10-7z" fill="#fff" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+          <button id="bRepeat" type="button" aria-label="Repeat" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 11V9a3 3 0 0 1 3-3h11M15 3l3 3-3 3M20 13v2a3 3 0 0 1-3 3H6M9 21l-3-3 3-3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <div class="vlabel" id="vLabel">PLAY ME QUICK</div>
+      </div>
+      <div class="prog"><span id="pBar"></span></div>
+    </div>
+    <a id="plLink" href="#" target="_blank" rel="noopener" hidden>Open the full playlist</a>
+    <ul id="songs"></ul>
+    <p id="plEmpty" hidden>No songs yet. Add them to the SONGS list at the bottom of this file.</p>
+  </div>
+</section>
+
+<!-- ============ PICTURES ============ -->
+<section id="pictures" class="view sec">
+  <div class="spine"></div>
+  <div id="grid"></div>
+  <p id="empty" hidden>No photos yet. Add your pictures to the PHOTOS list at the bottom of this file.</p>
+</section>
+
+<!-- ============ MESSAGE ============ -->
+<section id="message" class="view sec">
+  <div class="floaters" aria-hidden="true">
+    <i class="fl b" style="--s:26px;left:3%;top:14%;--t:6s;--d:-1s;--x:10px;--y:-22px"></i>
+    <i class="fl d" style="--s:9px;left:9%;top:34%;--t:5s;--d:-2s;--x:-6px;--y:-16px;--o:.9"></i>
+    <i class="fl s" style="--s:20px;left:5%;top:56%;--t:4.5s;--d:-.5s;--x:6px;--y:-12px"></i>
+    <i class="fl b" style="--s:38px;left:1%;top:76%;--t:8s;--d:-3s;--x:14px;--y:-26px;--o:.55"></i>
+    <i class="fl d" style="--s:11px;left:12%;top:90%;--t:6.5s;--d:-1.5s;--x:8px;--y:-18px"></i>
+    <i class="fl b" style="--s:22px;right:4%;top:11%;--t:7s;--d:-2.5s;--x:-12px;--y:-20px"></i>
+    <i class="fl s" style="--s:24px;right:7%;top:30%;--t:4s;--d:-1s;--x:-5px;--y:-14px"></i>
+    <i class="fl d" style="--s:10px;right:3%;top:50%;--t:5.5s;--d:-3.5s;--x:6px;--y:-20px;--o:.9"></i>
+    <i class="fl b" style="--s:34px;right:2%;top:70%;--t:9s;--d:-2s;--x:-10px;--y:-24px;--o:.55"></i>
+    <i class="fl s" style="--s:18px;right:10%;top:88%;--t:5s;--d:-4s;--x:-6px;--y:-12px"></i>
+  </div>
+  <div id="giftStage">
+    <h2>A little something for you</h2>
+    <button id="giftBtn" class="gbox" type="button" aria-label="Open your surprise">
+      <span class="gb-shadow"></span>
+      <span class="gb-rays"></span>
+      <span class="gb-ring"></span><span class="gb-ring r2"></span>
+      <span class="gb-beam"></span>
+      <span class="gb-body"><span class="gb-rib"></span><span class="gb-inside"></span></span>
+      <span class="gb-lid">
+        <span class="gb-rib"></span>
+        <span class="bow"><i class="tail tl"></i><i class="tail tr"></i><i class="loop l"></i><i class="loop r"></i><i class="knot"></i></span>
+      </span>
+    </button>
+    <div id="giftHint">Open your surprise</div>
+  </div>
+  <div id="reveal" hidden>
+    <div class="memories" id="memories"></div>
+    <article id="letter"><div class="paper" id="paper"></div></article>
+    <button id="replay" type="button">Close the box and open it again</button>
+  </div>
+</section>
+
+<div id="lb" aria-modal="true" role="dialog">
+  <div id="lbCount"></div>
+  <button class="lbBtn" id="lbClose" type="button" aria-label="Close">&#10005;</button>
+  <button class="lbBtn" id="lbPrev" type="button" aria-label="Previous">&#8249;</button>
+  <img id="lbImg" alt="">
+  <div id="lbCap"></div>
+  <button class="lbBtn" id="lbNext" type="button" aria-label="Next">&#8250;</button>
+</div>
+
+<script>
+/* ================= EDIT THESE ================= */
+const FRIEND_NAME = "DheynTzy";          // her name
+const FROM_NAME   = "Your friend";         // who the message is from
+const MENU_TITLE  = "U GO N PICK RN";
+const DINO_PIC    = "pictures/dino.png";   // picture on top of the menu ("" to hide)
+
+/* PLAYLIST: use src for an mp3 in your folder, and/or link to open the song in Spotify / YouTube */
+const PLAYLIST_NOTE = "Happy birthday! 💙 This song reminds me of you, and I wanted to share it with you because somehow, whenever I hear it, you come to mind. I don't really know how to explain it, but there's just something about this song that makes me think of you. I hope you like it, and maybe whenever you hear it again, it'll remind you of me too. :))";   // the paper note
+const PLAYLIST_PHOTO = "pictures/shark7.png";   // picture in the gold frame ("" to hide)
+const PLAYLIST_LINK = "";                  // full playlist link (Spotify / YouTube), "" to hide the button
+const SONGS = [
+  { title: "Song name 1", artist: "Artist", src: "music/drake.mp3", link: "" },
+];
+
+/* PICTURES */
+const PHOTOS = [
+  { src: "pictures/ml.jpg", caption: "" },
+  { src: "pictures/ml5.jpg", caption: "" },
+  { src: "pictures/ml1.jpg", caption: "" },
+  { src: "pictures/ml4.jpg", caption: "" },
+  
+  { src: "pictures/ml6.jpg", caption: "" },
+  { src: "pictures/ml3.jpg", caption: "" },
+  { src: "pictures/ml2.jpg", caption: "" },
+  { src: "pictures/ml7.jpg", caption: "" }
+];
+
+/* MESSAGE PHOTOS: the prints that pop out of the gift box (separate from HIGHLIGHTS above).
+   Put your own picture file names here. Pictures that can't be found are skipped. */
+const MEMORY_PHOTOS = [
+  { src: "pictures/shark8.jpg", caption: "" },
+];
+
+/* THE LETTER: mix paragraphs { p: "..." } and pictures { img: "...", caption: "..." } in any order */
+const LETTER = [
+  { p: "happy bday jeli!! 🥳💗 i hope u enjoy ur day ket u dont usually celebrate it hehehehehe pero pls take care of urself din ha especially sa mga situations mo na nakwento mo. ur strong!! ket sabihin mo pang manhid ka ur still human eh dont forget na u can feel things din and u dont always have to act like ur okay. kapit lang ull get through it din naman di naman araw araw bad dayz HAHAHAHAHAHA" },
+  { p: "also din sa mga nasasabi seyo ni momi mo ket ganon she loves u naman kahit minsan ganyan kilos nya sayo u know how moms can be but sometimes medyo unfair nadin sayo pero im sure u know she cares about u in her own way. i hope things get a little easier for u this year and u get more reasons to be happy. u deserve good things din naman so i hope u get to experience more of those. take care of urself always dont be too hard on urself, and enjoy ur day kahit papano!! happy birthday ulit JELIDHEYN" }
+];
+/* ============================================== */
+
+const $ = (id) => document.getElementById(id);
+const FALLBACK_MOTION = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- menu ---------- */
+$("menuTitle").textContent = MENU_TITLE;
+const dp = $("dinoPic");
+if (DINO_PIC) { dp.src = DINO_PIC; dp.addEventListener("error", () => dp.remove()); } else dp.remove();
+
+/* ---------- views (the iPhone back swipe works too) ---------- */
+const VIEWS = ["menu", "playlist", "pictures", "message"];
+function route() {
+  let h = location.hash.slice(1);
+  if (!VIEWS.includes(h)) h = "menu";
+  document.body.dataset.view = h;
+  VIEWS.forEach(v => $(v).classList.toggle("on", v === h));
+  $("backTop").hidden = (h === "menu");
+  if (h !== "playlist") stopAudio();
+  closeViewer();
+  window.scrollTo(0, 0);
+}
+addEventListener("hashchange", route);
+
+/* ---------- playlist ---------- */
+
+$("plNote").textContent = PLAYLIST_NOTE;
+if (PLAYLIST_PHOTO) {
+  const ph = $("plPhoto"); ph.src = PLAYLIST_PHOTO;
+  ph.addEventListener("error", () => $("plFrame").remove());
+} else $("plFrame").remove();
+if (PLAYLIST_LINK) { $("plLink").href = PLAYLIST_LINK; $("plLink").hidden = false; }
+
+const audio = new Audio();
+audio.preload = "none";
+const player = $("player");
+let playing = -1, shuffleOn = false, repeatOn = false;
+const rows = [];
+if (!SONGS.length) $("plEmpty").hidden = false;
+SONGS.forEach((s, i) => {
+  const li = document.createElement("li"); li.className = "song";
+  const btn = document.createElement("button"); btn.type = "button"; btn.className = "sp";
+  const ic = document.createElement("span"); ic.className = "ic"; ic.textContent = i + 1;
+  const st = document.createElement("span"); st.className = "st";
+  const b = document.createElement("b"); b.textContent = s.title;
+  const a = document.createElement("i"); a.textContent = s.artist || "";
+  st.append(b, a); btn.append(ic, st); li.appendChild(btn);
+  $("songs").appendChild(li); rows.push(li);
+  btn.addEventListener("click", () => playSong(i));
+});
+const playable = () => SONGS.map((s, i) => s.src ? i : -1).filter(i => i >= 0);
+function mark(i) {
+  rows.forEach((r, k) => r.classList.toggle("cur", k === i));
+  $("vLabel").textContent = "HAHAHHAHAHAHAHA";
+}
+function playSong(i) {
+  const s = SONGS[i];
+  if (!s.src) { if (s.link) window.open(s.link, "_blank", "noopener"); return; }
+  if (playing === i) { audio.paused ? audio.play() : audio.pause(); return; }
+  playing = i; audio.src = s.src; mark(i);
+  const p = audio.play(); if (p && p.catch) p.catch(() => {});
+}
+function step(dir) {
+  const list = playable(); if (!list.length) return;
+  let n;
+  if (shuffleOn && list.length > 1) { do { n = list[Math.floor(Math.random() * list.length)]; } while (n === playing); }
+  else { const k = list.indexOf(playing); n = list[k < 0 ? (dir > 0 ? 0 : list.length - 1) : (k + dir + list.length) % list.length]; }
+  if (n === playing) { audio.currentTime = 0; audio.play(); return; }
+  playSong(n);
+}
+$("bPlay").addEventListener("click", () => {
+  if (playing >= 0) { audio.paused ? audio.play() : audio.pause(); return; }
+  const list = playable();
+  if (list.length) playSong(shuffleOn ? list[Math.floor(Math.random() * list.length)] : list[0]);
+  else if (SONGS[0] && SONGS[0].link) window.open(SONGS[0].link, "_blank", "noopener");
+});
+$("bNext").addEventListener("click", () => step(1));
+$("bPrev").addEventListener("click", () => { if (audio.currentTime > 3) { audio.currentTime = 0; return; } step(-1); });
+$("bShuffle").addEventListener("click", (e) => { shuffleOn = !shuffleOn; e.currentTarget.classList.toggle("on", shuffleOn); e.currentTarget.setAttribute("aria-pressed", shuffleOn); });
+$("bRepeat").addEventListener("click", (e) => { repeatOn = !repeatOn; e.currentTarget.classList.toggle("on", repeatOn); e.currentTarget.setAttribute("aria-pressed", repeatOn); });
+audio.addEventListener("play", () => player.classList.add("playing"));
+audio.addEventListener("pause", () => player.classList.remove("playing"));
+audio.addEventListener("timeupdate", () => { if (audio.duration) $("pBar").style.width = (audio.currentTime / audio.duration * 100) + "%"; });
+audio.addEventListener("ended", () => { if (repeatOn) { audio.currentTime = 0; audio.play(); } else if (playable().length > 1) step(1); });
+function stopAudio() { audio.pause(); }
+
+/* ---------- pictures ---------- */
+const grid = $("grid"); let settled = 0;
+const good = () => PHOTOS.filter(p => !p.bad);
+PHOTOS.forEach((p) => {
+  const fig = document.createElement("figure"); fig.className = "slab";
+  const img = new Image(); img.loading = "lazy"; img.alt = p.caption || ""; img.src = p.src;
+  const cap = document.createElement("figcaption"); cap.textContent = p.caption || "";
+  fig.append(img, cap);
+  const check = () => { settled++; if (settled >= PHOTOS.length && !good().length) $("empty").hidden = false; };
+  img.addEventListener("error", () => { p.bad = true; fig.remove(); check(); });
+  img.addEventListener("load", check);
+  fig.addEventListener("click", () => openAt(good().indexOf(p)));
+  grid.appendChild(fig);
+});
+const lb = $("lb"), lbImg = $("lbImg"); let cur = 0;
+function show() {
+  const list = good(); if (!list.length) return closeViewer();
+  cur = (cur + list.length) % list.length;
+  lbImg.src = list[cur].src; $("lbCap").textContent = list[cur].caption || "";
+  $("lbCount").textContent = (cur + 1) + " / " + list.length;
+}
+function openAt(i) { cur = Math.max(0, i); lb.classList.add("on"); document.body.classList.add("lock"); show(); }
+function closeViewer() { lb.classList.remove("on"); document.body.classList.remove("lock"); }
+$("lbClose").addEventListener("click", closeViewer);
+$("lbPrev").addEventListener("click", () => { cur--; show(); });
+$("lbNext").addEventListener("click", () => { cur++; show(); });
+lb.addEventListener("click", (e) => { if (e.target === lb) closeViewer(); });
+document.addEventListener("keydown", (e) => {
+  if (!lb.classList.contains("on")) return;
+  if (e.key === "Escape") closeViewer();
+  if (e.key === "ArrowLeft") { cur--; show(); }
+  if (e.key === "ArrowRight") { cur++; show(); }
+});
+let sx = null;
+lb.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener("touchend", (e) => {
+  if (sx === null) return;
+  const dx = e.changedTouches[0].clientX - sx; sx = null;
+  if (Math.abs(dx) > 50) { cur += dx < 0 ? 1 : -1; show(); }
+}, { passive: true });
+
+/* ---------- message: the surprise box ---------- */
+const msgSec = $("message"), giftEl = $("giftBtn"), hintEl = $("giftHint"), reveal = $("reveal"),
+      memEl = $("memories"), letterEl = $("letter"), paper = $("paper"), replayBtn = $("replay");
+
+const CONFETTI = ["#2f6f9f", "#4f8fc4", "#7d8c99", "#aab8c3", "#dce6ec", "#f4f8fa", "#ffffff",
+                  "linear-gradient(135deg,#f9fbfc,#aab8c3 55%,#e8eef2)"];   // blue, grey, white, silver
+const MAX_MEMORIES = 6;                                                     // how many prints pop out
+const POSE = [{ r: -6, y: 6 }, { r: 4, y: -8 }, { r: -3, y: 10 }, { r: 6, y: -4 }, { r: -5, y: 8 }, { r: 3, y: -6 }];
+
+let msgState = "closed", runId = 0, typingMs = 0;     // closed | opening | open | resetting
+const msgTimers = [], msgAnims = [];
+const rnd = (a, b) => a + Math.random() * (b - a);
+const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+function later(fn, ms) {
+  const id = setTimeout(() => { const k = msgTimers.indexOf(id); if (k > -1) msgTimers.splice(k, 1); fn(); }, ms);
+  msgTimers.push(id);
+}
+function track(anim, onDone) {
+  msgAnims.push(anim);
+  anim.addEventListener("finish", () => { const k = msgAnims.indexOf(anim); if (k > -1) msgAnims.splice(k, 1); if (onDone) onDone(); });
+}
+
+/* the one layer all confetti lives in, so it can be wiped in one go */
+const fx = document.createElement("div"); fx.id = "fx"; fx.setAttribute("aria-hidden", "true");
+document.body.appendChild(fx);
+
+function burst(x, y, count, spread, power) {
+  const n = Math.round(count * (innerWidth < 520 ? .7 : 1));
+  for (let i = 0; i < n; i++) {
+    const kind = i % 3, sz = rnd(6, 12);
+    const p = document.createElement("i"); p.className = "cf k" + kind;
+    p.style.width = (kind === 2 ? sz * .45 : sz) + "px";
+    p.style.height = (kind === 2 ? sz * 1.8 : kind === 1 ? sz : sz * .62) + "px";
+    p.style.background = CONFETTI[Math.floor(Math.random() * CONFETTI.length)];
+    fx.appendChild(p);
+    const ang = (-90 + rnd(-spread, spread)) * Math.PI / 180, sp = rnd(.45, 1) * power;
+    const vx = Math.cos(ang) * sp, vy = Math.sin(ang) * sp;
+    const dur = rnd(1900, 2900), G = 430, K = 1.6, T = G / K;              // gravity, drag, terminal speed
+    const rx = rnd(260, 720) * (Math.random() < .5 ? -1 : 1), rz = rnd(-420, 420);
+    const frames = [], N = 18;
+    for (let k = 0; k <= N; k++) {
+      const f = k / N, t = f * dur / 1000, e = (1 - Math.exp(-K * t)) / K;
+      const px = x + vx * e, py = y + (vy - T) * e + T * t;
+      frames.push({
+        transform: `translate3d(${px.toFixed(1)}px,${py.toFixed(1)}px,0) rotateX(${(rx * t).toFixed(0)}deg) rotateZ(${(rz * t).toFixed(0)}deg)`,
+        opacity: f > .7 ? Math.max(0, 1 - (f - .7) / .3) : 1, offset: f
+      });
+    }
+    const a = p.animate(frames, { duration: dur, easing: "linear", fill: "forwards" });
+    track(a, () => p.remove());
+  }
+}
+
+/* sparkle stars flying out of the box */
+function sparkles(x, y, count) {
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement("i"); el.className = "st";
+    const sz = rnd(10, 22);
+    el.style.width = el.style.height = sz + "px";
+    el.style.background = i % 2 ? "#f4f8fa" : "#9fcbee";
+    fx.appendChild(el);
+    const ang = rnd(0, Math.PI * 2), dist = rnd(80, 230);
+    const ex = x + Math.cos(ang) * dist, ey = y + Math.sin(ang) * dist - 30;
+    const a = el.animate([
+      { transform: `translate(${x}px,${y}px) scale(0) rotate(0deg)`, opacity: 0 },
+      { transform: `translate(${x + (ex - x) * .6}px,${y + (ey - y) * .6}px) scale(1.2) rotate(120deg)`, opacity: 1, offset: .45 },
+      { transform: `translate(${ex}px,${ey}px) scale(0) rotate(260deg)`, opacity: 0 }
+    ], { duration: rnd(900, 1500), delay: rnd(0, 250), easing: "ease-out", fill: "both" });
+    track(a, () => el.remove());
+  }
+}
+
+/* balloons drifting up the screen */
+const BALLOONS = ["#2f6f9f", "#4f8fc4", "#7fb4dc", "#aab8c3", "#dce6ec", "#1f567d"];
+function balloons(count) {
+  for (let i = 0; i < count; i++) {
+    const b = document.createElement("i"); b.className = "bl";
+    b.style.background = BALLOONS[i % BALLOONS.length];
+    fx.appendChild(b);
+    const x0 = rnd(0.04, 0.9) * innerWidth, sway = rnd(18, 44) * (Math.random() < .5 ? -1 : 1);
+    const dur = rnd(4200, 6500), y0 = innerHeight + 90, y1 = -160;
+    const a = b.animate([
+      { transform: `translate(${x0}px,${y0}px) rotate(-4deg)`, opacity: 1 },
+      { transform: `translate(${x0 + sway}px,${y0 + (y1 - y0) * .35}px) rotate(5deg)`, opacity: 1, offset: .35 },
+      { transform: `translate(${x0 - sway * .6}px,${y0 + (y1 - y0) * .7}px) rotate(-5deg)`, opacity: 1, offset: .7 },
+      { transform: `translate(${x0 + sway * .3}px,${y1}px) rotate(3deg)`, opacity: .9 }
+    ], { duration: dur, delay: rnd(0, 1100), easing: "cubic-bezier(.3,.1,.5,1)", fill: "both" });
+    track(a, () => b.remove());
+  }
+}
+
+/* photo prints: every candidate is preloaded, broken ones drop out silently */
+const memFigs = [];
+const heading = document.querySelector("#giftStage h2"), headingText = heading.textContent;
+const memReady = Promise.all(
+  LETTER.filter(b => b.img).map(b => ({ src: b.img, caption: b.caption || "" }))
+    .concat(MEMORY_PHOTOS.map(p => ({ src: p.src, caption: p.caption || "" })))
+    .filter((it, i, all) => all.findIndex(o => o.src === it.src) === i)
+    .map(it => new Promise(done => {
+      const fig = document.createElement("figure"); fig.className = "pol";
+      const im = new Image(); im.alt = it.caption || "A memory"; im.decoding = "async";
+      const cap = document.createElement("figcaption"); cap.textContent = it.caption;
+      fig.append(im, cap);
+      im.addEventListener("load", () => done());
+      im.addEventListener("error", () => { fig.remove(); const k = memFigs.indexOf(fig); if (k > -1) memFigs.splice(k, 1); done(); });
+      memEl.appendChild(fig); memFigs.push(fig); im.src = it.src;
+    }))
+);
+function prepMemories() {
+  const use = memFigs.slice(0, MAX_MEMORIES);
+  memFigs.forEach(f => { f.hidden = !use.includes(f); f.classList.remove("in"); });
+  use.forEach((f, i) => {
+    const p = POSE[i % POSE.length]; f._r = p.r; f._dy = p.y;
+    f.style.setProperty("--r", p.r + "deg"); f.style.setProperty("--dy", p.y + "px");
+  });
+  return use;
+}
+function popPhotos(use) {
+  const g = giftEl.getBoundingClientRect(), mx = g.left + g.width / 2, my = g.top + g.height * .34;
+  use.forEach((f, i) => {
+    const r = f.getBoundingClientRect();
+    const ox = mx - (r.left + r.width / 2), oy = my - (r.top + r.height / 2 - f._dy);   // box mouth, relative to its resting spot
+    const up = rnd(150, 210) + i * 8;
+    const a = f.animate([
+      { transform: `translate(${ox}px,${oy}px) rotate(0deg) scale(.2)`, opacity: 0, offset: 0, easing: "cubic-bezier(.15,.8,.4,1)" },
+      { transform: `translate(${ox * .8}px,${oy - up * .55}px) rotate(${-f._r * 1.5}deg) scale(.7)`, opacity: 1, offset: .14, easing: "cubic-bezier(.2,.7,.4,1)" },
+      { transform: `translate(${ox * .55}px,${oy - up}px) rotate(${-f._r * .8}deg) scale(1)`, opacity: 1, offset: .4, easing: "cubic-bezier(.45,0,.75,.55)" },
+      { transform: `translate(0px,${f._dy + 12}px) rotate(${f._r * 1.2}deg) scale(1.04)`, opacity: 1, offset: .8, easing: "ease-out" },
+      { transform: `translate(0px,${f._dy}px) rotate(${f._r}deg) scale(1)`, opacity: 1, offset: 1 }
+    ], { duration: 1500, delay: i * 110, fill: "both" });
+    msgAnims.push(a);
+    a.addEventListener("finish", () => { f.classList.add("in"); a.cancel(); const k = msgAnims.indexOf(a); if (k > -1) msgAnims.splice(k, 1); });
+  });
+}
+
+/* the letter: every character is its own span, revealed by one CSS class */
+function spanify(el, text, counter) {
+  const sr = document.createElement("span"); sr.className = "sr"; sr.textContent = text;
+  const vis = document.createElement("span"); vis.setAttribute("aria-hidden", "true");
+  text.split(/(\s+)/).forEach(tok => {
+    if (!tok) return;
+    if (/^\s+$/.test(tok)) { vis.appendChild(document.createTextNode(tok.indexOf("\n") > -1 ? "\n" : " ")); return; }
+    const w = document.createElement("span"); w.className = "w";
+    for (const chr of tok) {
+      const c = document.createElement("span"); c.className = "ch"; c.textContent = chr;
+      c.style.setProperty("--i", counter.n++); w.appendChild(c);
+    }
+    vis.appendChild(w);
+  });
+  el.append(sr, vis);
+}
+function buildLetter() {
+  paper.textContent = ""; const counter = { n: 0 };
+  const hi = document.createElement("h3"); spanify(hi, "Dear " + "Dheynm" + ",", counter); paper.appendChild(hi);
+  LETTER.forEach(blk => { if (blk.p) { const p = document.createElement("p"); spanify(p, blk.p, counter); paper.appendChild(p); } });
+  const sig = document.createElement("div"); sig.className = "sig"; spanify(sig, "With love, " + "F", counter); paper.appendChild(sig);
+  const stepMs = Math.max(8, Math.min(34, 4000 / counter.n));
+  paper.style.setProperty("--step", stepMs + "ms");
+  typingMs = counter.n * stepMs + 340;
+}
+
+function finishOpen() { msgState = "open"; replayBtn.classList.add("show"); }
+
+function openSurprise() {
+  if (msgState !== "closed") return;
+  msgState = "opening"; const id = ++runId;
+  buildLetter(); const use = prepMemories();
+  hintEl.hidden = true; giftEl.classList.add("held"); reveal.hidden = false;
+  giftEl.setAttribute("aria-label", "Surprise opened");
+
+  if (reducedMotion()) {                                   // no motion: show everything at once
+    giftEl.classList.add("open", "static"); msgSec.classList.add("opened");
+    use.forEach(f => f.classList.add("in"));
+    letterEl.classList.add("on"); paper.classList.add("static");
+    finishOpen(); return;
+  }
+
+  scrollTo({ top: Math.max(0, giftEl.getBoundingClientRect().top + scrollY - 100), behavior: "smooth" });
+  giftEl.classList.add("shake");
+  later(() => {                                            // lid pops, confetti bursts
+    if (id !== runId) return;
+    giftEl.classList.remove("shake"); giftEl.classList.add("open", "jump"); msgSec.classList.add("opened");
+    const g = giftEl.getBoundingClientRect(), mx = g.left + g.width / 2, my = g.top + g.height * .36;
+    burst(mx, my, 66, 48, 860);
+    sparkles(mx, my, innerWidth < 520 ? 14 : 22);
+    later(() => burst(mx, my, 36, 78, 640), 240);
+    later(() => balloons(innerWidth < 520 ? 6 : 10), 350);
+    later(() => { sparkles(mx, my, 10); burst(mx, my, 24, 90, 560); }, 900);
+    heading.textContent = "Happy Birthday! 🎉"; heading.classList.remove("pop"); void heading.offsetWidth; heading.classList.add("pop");
+  }, 600);
+  later(() => { if (id === runId) popPhotos(use); }, 760);  // prints pop out of the box
+  later(() => {                                            // letter unfolds, then types itself
+    if (id !== runId) return;
+    letterEl.classList.add("on");
+    later(() => { paper.classList.add("typing"); }, 450);
+    later(() => { if (id === runId) finishOpen(); }, 450 + typingMs + 250);
+  }, 2150);
+}
+
+function resetSurprise(instant) {
+  runId++;
+  msgTimers.splice(0).forEach(clearTimeout);
+  msgAnims.splice(0).forEach(a => { try { a.cancel(); } catch (e) {} });
+  fx.textContent = "";
+  const wasOpen = msgState !== "closed"; msgState = "closed";
+  memFigs.forEach(f => { f.classList.remove("in"); f.getAnimations().forEach(a => a.cancel()); });
+  letterEl.classList.remove("on"); paper.classList.remove("typing", "static"); paper.textContent = "";
+  replayBtn.classList.remove("show"); msgSec.classList.remove("opened");
+  reveal.hidden = true; hintEl.hidden = false;
+  giftEl.classList.remove("shake", "open", "held", "static", "jump");
+  heading.textContent = headingText; heading.classList.remove("pop");
+  giftEl.setAttribute("aria-label", "Open your surprise");
+  if (wasOpen && !instant && !reducedMotion()) {
+    giftEl.classList.add("closing");
+    later(() => giftEl.classList.remove("closing"), 800);
+  } else giftEl.classList.remove("closing");
+}
+
+giftEl.addEventListener("click", openSurprise);
+replayBtn.addEventListener("click", () => {
+  if (msgState !== "open") return;
+  msgState = "resetting";
+  replayBtn.classList.remove("show");
+  if (reducedMotion()) { resetSurprise(true); scrollTo(0, 0); return; }
+  scrollTo({ top: 0, behavior: "smooth" });
+  later(() => resetSurprise(false), 450);
+});
+addEventListener("hashchange", () => { if (location.hash !== "#message") resetSurprise(true); });
+
+/* start on the right page (must run last) */
+route();
+</script>
+</body>
+</html>
